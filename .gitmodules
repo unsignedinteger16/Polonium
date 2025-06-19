@@ -2,3 +2,6 @@
 	path = deps/limine-binary
 	url = https://github.com/limine-bootloader/limine.git
 	branch = v9.x-binary
+[submodule "pooskern/deps/freestnd-c-hdrs-0bsd"]
+	path = pooskern/deps/freestnd-c-hdrs-0bsd
+	url = https://codeberg.org/osdev/freestnd-c-hdrs-0bsd.git

@@ -1,0 +1,1 @@
+override CC_IS_CLANG := $(shell ! $(CC) --version 2>/dev/null | grep 'clang'>/dev/null 2>&1; echo $$?)
