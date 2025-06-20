@@ -29,15 +29,22 @@ override CFLAGS += \
 	-fno-stack-check \
 	-fno-PIC \
 	-ffunction-sections \
-	-fdata-sections
+	-fdata-sections \
+	-g
+
+include ../mk/git.mk
 
 override CPPFLAGS := \
 	-I include \
 	-I ../common/include \
 	-I deps/freestnd-c-hdrs-0bsd \
+	-I deps/flanterm/src \
 	$(CPPFLAGS) \
 	-DLIMINE_API_REVISION=3 \
 	-DPOOSKERN_ARCH=$(ARCH) \
+	-DGIT_BRANCH_NAME=\"$(GIT_BRANCH_NAME)\" \
+	-DGIT_COMMIT_SHORT=\"$(GIT_COMMIT_ID_SHORT)\" \
+	-DPOLONIUM_KERNEL \
 	-MMD \
 	-MP
 
@@ -47,6 +54,7 @@ override LDFLAGS += \
 	-Wl,--build-id=none \
 	-nostdlib \
 	-static \
+	-g \
 	-z max-page-size=0x1000 \
 	-Wl,--gc-sections \
 	-T linker-$(ARCH).ld

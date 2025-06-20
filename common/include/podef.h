@@ -38,4 +38,10 @@ typedef size_t SIZE, *PSIZE;
 typedef int INTEGER, *PINTEGER;
 typedef unsigned int UNSIGNEDINTEGER, UINTEGER, *PUNSIGNEDINTEGER, *PUINTEGER;
 
+typedef char CHAR, *PCHAR;
+typedef PCHAR STR, *PSTR;
+
+typedef PDWORD WCHAR, *PWCHAR;
+typedef PWCHAR WSTR, *PWSTR;
+
 #endif

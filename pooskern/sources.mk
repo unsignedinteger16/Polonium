@@ -3,8 +3,16 @@
 ### manually add files here
 
 override SOURCES := \
+	src/ke/framebuffer.c \
 	src/ke/init.c \
+	src/ke/terminal.c \
+	src/rtl/printf.c \
 	src/rtl/string.c
+
+## FLANTERM
+override SOURCES += \
+	deps/flanterm/src/flanterm.c \
+	deps/flanterm/src/flanterm_backends/fb.c
 
 ifeq ($(ARCH),x86_64)
 	override SOURCES += \

@@ -9,17 +9,15 @@ Authors:
     unsignedinteger16
 */
 
+#include <podef.h>
 #include <limine.h>
 #include <ke/cpu.h>
+#include <ke/framebuffer.h>
+#include <ke/terminal.h>
+#include <rtl/printf.h>
 
 __attribute__((used, section(".limine_requests")))
 static volatile LIMINE_BASE_REVISION(3);
-
-__attribute__((used, section(".limine_requests")))
-static volatile struct limine_framebuffer_request FramebufferRequest = {
-    .id = LIMINE_FRAMEBUFFER_REQUEST,
-    .revision = 0
-};
 
 __attribute__((used, section(".limine_requests_start")))
 static volatile LIMINE_REQUESTS_START_MARKER;
@@ -27,6 +25,12 @@ static volatile LIMINE_REQUESTS_START_MARKER;
 __attribute__((used, section(".limine_requests_end")))
 static volatile LIMINE_REQUESTS_END_MARKER;
 
-void KiSystemStartup() {
+NORETURN void KiSystemStartup() {
+    FRAMEBUFFER_LIST FramebufferList = KeFetchFramebuffers();
+    for(SIZE i = 0; i < FramebufferList.Count; i++) {
+        PTERMINAL Terminal = KeCreateTerminalFromFramebuffer(FramebufferList.Data[i]);
+        KeWriteToTerminalA(Terminal, "Polonium Operating System (BUILD: " GIT_BRANCH_NAME "-" GIT_COMMIT_SHORT ")\n");
+        RtlPrintfToTerminal(Terminal, "Hello from \"kprintf\". %%s = %s, %%u = %u", "Hello", 24);
+    }
     KeHaltCpu();
 }
