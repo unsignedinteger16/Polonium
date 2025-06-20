@@ -1,4 +1,6 @@
-polonium-*.iso
-polonium-*.hdd
+polonium-x86_64.iso
+polonium-x86_64.hdd
 ovmf
 iso_root
+compile_commands.json
+.vscode
