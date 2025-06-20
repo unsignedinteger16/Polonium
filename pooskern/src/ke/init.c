@@ -30,7 +30,7 @@ NORETURN void KiSystemStartup() {
     for(SIZE i = 0; i < FramebufferList.Count; i++) {
         PTERMINAL Terminal = KeCreateTerminalFromFramebuffer(FramebufferList.Data[i]);
         KeWriteToTerminalA(Terminal, "Polonium Operating System (BUILD: " GIT_BRANCH_NAME "-" GIT_COMMIT_SHORT ")\n");
-        RtlPrintfToTerminal(Terminal, "Hello from \"kprintf\". %%s = %s, %%u = %u", "Hello", 24);
+        RtlPrintfToTerminal(Terminal, "Hello from \"kprintf\". %%s = %s, %%u = %u, nullptr = %s", "Hello", 24, NULL);
     }
     KeHaltCpu();
 }

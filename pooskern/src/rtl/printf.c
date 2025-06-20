@@ -19,7 +19,7 @@ STR RtlUnsignedToStringA(STR Buffer, SIZE Cap, UQWORD Integer, BYTE Base) {
 
     if(Base > sizeof(Characters)) {
         // For now not supported
-        return;
+        return NULL;
     }    
 
     SIZE i = Cap - 2;
@@ -33,7 +33,7 @@ STR RtlUnsignedToStringA(STR Buffer, SIZE Cap, UQWORD Integer, BYTE Base) {
 void RtlPrintfToTerminal(PTERMINAL Terminal, STR Formatter, ...) {
     SIZE Readed = 0;
     SIZE NewStringOffset = 0;
-    char IntegerBuffer[1024];
+    char IntegerBuffer[66];
 
     va_list Arguments;
     va_start(Arguments, Formatter);
@@ -46,10 +46,17 @@ void RtlPrintfToTerminal(PTERMINAL Terminal, STR Formatter, ...) {
                 KeWriteToTerminalA(Terminal, "%");
                 break;
             case 's':
-                KeWriteToTerminalA(Terminal, va_arg(Arguments, STR));
+                {
+                    STR String = va_arg(Arguments, STR); 
+                    if (!String) {
+                        KeWriteToTerminalA(Terminal, "(null)");
+                        break;
+                    }   
+                    KeWriteToTerminalA(Terminal, String);
+                }
                 break;
             case 'u':
-                KeWriteToTerminalA(Terminal, RtlUnsignedToStringA(IntegerBuffer, 1024, va_arg(Arguments, UQWORD), 10));
+                KeWriteToTerminalA(Terminal, RtlUnsignedToStringA(IntegerBuffer, 66, va_arg(Arguments, UQWORD), 10));
                 break;
             default:
                 break;
