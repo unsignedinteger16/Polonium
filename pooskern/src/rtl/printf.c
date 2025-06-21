@@ -22,6 +22,8 @@ STR RtlUnsignedToStringA(STR Buffer, SIZE Cap, UQWORD Integer, BYTE Base) {
         return NULL;
     }    
 
+    if(Integer == 0) return "0";
+
     SIZE i = Cap - 2;
     Buffer[Cap-1] = '\0';
 
@@ -57,6 +59,9 @@ void RtlPrintfToTerminal(PTERMINAL Terminal, STR Formatter, ...) {
                 break;
             case 'u':
                 KeWriteToTerminalA(Terminal, RtlUnsignedToStringA(IntegerBuffer, 66, va_arg(Arguments, UQWORD), 10));
+                break;
+            case 'x':
+                KeWriteToTerminalA(Terminal, RtlUnsignedToStringA(IntegerBuffer, 66, va_arg(Arguments, UQWORD), 16));
                 break;
             default:
                 break;

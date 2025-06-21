@@ -17,7 +17,10 @@ Authors:
 
 #define UNUSED __attribute__((unused))
 #define NORETURN __attribute__((noreturn))
+#define PACKED __attribute__((packed))
 #define ASM __asm__ __volatile__
+
+#define ARRSIZE(arr) sizeof(arr)/sizeof(arr[0])
 
 typedef void VOID, *PVOID;
 
@@ -43,5 +46,7 @@ typedef PCHAR STR, *PSTR;
 
 typedef PDWORD WCHAR, *PWCHAR;
 typedef PWCHAR WSTR, *PWSTR;
+
+typedef uintptr_t UINTPTR;
 
 #endif

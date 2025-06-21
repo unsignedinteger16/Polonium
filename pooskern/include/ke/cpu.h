@@ -19,5 +19,6 @@ Authors:
 */
 
 NORETURN void KeHaltCpu();
+void KeInitCpu();
 
 #endif

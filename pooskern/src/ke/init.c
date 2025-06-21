@@ -12,6 +12,7 @@ Authors:
 #include <podef.h>
 #include <limine.h>
 #include <ke/cpu.h>
+#include <ke/error.h>
 #include <ke/framebuffer.h>
 #include <ke/terminal.h>
 #include <rtl/printf.h>
@@ -26,11 +27,11 @@ __attribute__((used, section(".limine_requests_end")))
 static volatile LIMINE_REQUESTS_END_MARKER;
 
 NORETURN void KiSystemStartup() {
-    FRAMEBUFFER_LIST FramebufferList = KeFetchFramebuffers();
-    for(SIZE i = 0; i < FramebufferList.Count; i++) {
-        PTERMINAL Terminal = KeCreateTerminalFromFramebuffer(FramebufferList.Data[i]);
-        KeWriteToTerminalA(Terminal, "Polonium Operating System (BUILD: " GIT_BRANCH_NAME "-" GIT_COMMIT_SHORT ")\n");
-        RtlPrintfToTerminal(Terminal, "Hello from \"kprintf\". %%s = %s, %%u = %u, nullptr = %s", "Hello", 24, NULL);
-    }
-    KeHaltCpu();
+    PFRAMEBUFFER Framebuffer = (KeFetchFramebuffers().Data[0]);
+    PTERMINAL Terminal = KeCreateTerminalFromFramebuffer(Framebuffer);
+    KeSetErrorTerminal(Terminal);
+    KeWriteToTerminalA(Terminal, "Polonium Operating System (BUILD: " GIT_BRANCH_NAME "-" GIT_COMMIT_SHORT ")\n");
+    KeInitCpu();
+    KeWriteToTerminalA(Terminal, "CPU Initialized\n");
+    KeFailure("Nothing to do!", 0, 0, 0, 0);
 }
